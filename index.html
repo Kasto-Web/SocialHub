@@ -420,7 +420,7 @@ footer .heart{display:inline-block;background:var(--grad);-webkit-background-cli
 </main>
 
 <section class="creator">
-  <div class="creator-card reveal">
+  <div class="creator-card">
     <img src="assets/kasto.jpg" alt="Kasto" class="creator-photo">
     <div class="creator-info">
       <h2>Created by Kasto</h2>
@@ -624,8 +624,9 @@ burst(innerWidth/2,innerHeight/3,120);
 
 // ---------- scroll reveal ----------
 (function(){
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.15});
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.05});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  setTimeout(()=>{document.querySelectorAll('.reveal:not(.in)').forEach(el=>el.classList.add('in'));},1600);
 })();
 </script>
 </body>
