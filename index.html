@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOCIALHUB — Every Voice, One Universe</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff0033'/%3E%3Cstop offset='.5' stop-color='%238134af'/%3E%3Cstop offset='1' stop-color='%2300f2ea'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='46' fill='url(%23g)'/%3E%3Cpath d='M22 50c10-8 22-14 36-18 8 12 12 26 10 42-14-2-26-8-36-16-4-3-6-5-10-8z' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#04040d; --bg2:#0a0a1d; --ink:#e9e9ff; --muted:#9a9aca; --line:rgba(255,255,255,.1);
+  --grad:linear-gradient(135deg,#ff0033,#8134af,#00f2ea);
+  --yt:#ff0033; --x:#f5f5f5; --rd:#ff4500; --ig:#e1306c; --tt:#fe2c55; --fb:#1877f2;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Space Grotesk',system-ui,sans-serif;
+  background:var(--bg); color:var(--ink);
+  overflow-x:hidden; line-height:1.5;
+}
+h1,h2,h3,.display{font-family:'Bebas Neue',sans-serif; letter-spacing:.04em; font-weight:400}
+a{color:inherit;text-decoration:none}
+::selection{background:#8134af;color:#fff}
+
+@media(hover:hover) and (pointer:fine){ body{cursor:none} }
+
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(40% 40% at 12% 18%, rgba(255,0,51,.20), transparent 60%),
+    radial-gradient(45% 45% at 88% 12%, rgba(0,242,234,.16), transparent 60%),
+    radial-gradient(50% 50% at 78% 85%, rgba(129,52,175,.24), transparent 65%);
+  animation:aur 16s ease-in-out infinite alternate;
+  filter:blur(20px);
+}
+@keyframes aur{
+  0%{transform:translate3d(0,0,0) scale(1); opacity:.8}
+  50%{opacity:1}
+  100%{transform:translate3d(-3%,2%,0) scale(1.15); opacity:.85}
+}
+.grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+}
+
+/* ---------- cursor ---------- */
+#cursor{position:fixed;top:0;left:0;z-index:9999;pointer-events:none}
+@media(hover:none),(pointer:coarse){#cursor{display:none}}
+.cdot{position:fixed;top:0;left:0;width:8px;height:8px;border-radius:50%;
+  background:var(--grad);transform:translate(-50%,-50%);mix-blend-mode:screen;z-index:9999;pointer-events:none}
+.cring{position:fixed;top:0;left:0;width:34px;height:34px;border-radius:50%;
+  border:1.5px solid rgba(0,242,234,.7);transform:translate(-50%,-50%);z-index:9998;pointer-events:none;
+  transition:width .25s,height .25s,border-color .25s;backdrop-filter:invert(1) hue-rotate(180deg);opacity:.9}
+body.cursor-hover .cring{width:56px;height:56px;border-color:rgba(255,0,51,.9)}
+.spark{position:fixed;width:4px;height:4px;border-radius:50%;pointer-events:none;z-index:9999;
+  animation:spark 0.7s ease-out forwards;mix-blend-mode:screen}
+@keyframes spark{from{opacity:1;transform:translate(-50%,-50%) scale(1)}to{opacity:0;transform:translate(-50%,-50%) scale(0)}}
+
+/* ---------- nav ---------- */
+nav{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 4vw; border-bottom:1px solid var(--line);
+  backdrop-filter:blur(12px); background:rgba(4,4,13,.55); position:sticky;top:0}
+.brand{display:flex;align-items:center;gap:.6rem;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:.12em}
+.brand .orb{width:26px;height:26px;border-radius:50%;background:var(--grad);
+  box-shadow:0 0 18px rgba(129,52,175,.9),0 0 42px rgba(0,242,234,.5);
+  animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25) rotate(180deg)}}
+.nav-right{display:flex;align-items:center;gap:1.2rem;font-size:.8rem;color:var(--muted);letter-spacing:.06em}
+.live-pill{display:flex;align-items:center;gap:.5rem;padding:.35rem .8rem;border:1px solid rgba(0,242,234,.4);border-radius:99px;color:var(--ink);background:rgba(0,242,234,.06)}
+.live-pill i{width:8px;height:8px;border-radius:50%;background:#25f4ee;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:.15}}
+#clock{font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink)}
+
+/* ---------- layout ---------- */
+main{position:relative;z-index:5}
+section{position:relative;z-index:5}
+
+/* ---------- hero ---------- */
+.hero{padding:4rem 4vw 2rem;text-align:center}
+.hero h1{font-size:clamp(3rem,9vw,7rem);line-height:.95;text-transform:uppercase;
+  background:linear-gradient(100deg,#fff, #00f2ea 40%, #8134af 70%, #ff0033);
+  background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:flow 6s linear infinite, floaty 5s ease-in-out infinite;
+  filter:drop-shadow(0 0 22px rgba(129,52,175,.55))}
+@keyframes flow{to{background-position:300% 0}}
+@keyframes floaty{50%{transform:translateY(-8px)}}
+.hero .sub{margin-top:1rem;font-size:clamp(1rem,2.4vw,1.4rem);color:var(--muted);min-height:2.2em}
+.hero .sub b{color:var(--ink)}
+.typewrap{display:inline-block;min-width:3ch;text-align:left;color:#25f4ee;text-shadow:0 0 14px rgba(37,244,238,.8);border-right:2px solid #25f4ee;animation:caret .8s steps(1) infinite;padding-right:.1em}
+@keyframes caret{50%{border-color:transparent}}
+
+/* ---------- orbit ---------- */
+.orbit-stage{position:relative;width:min(580px,92vw);height:min(580px,92vw);margin:2.5rem auto .5rem}
+.orbit-stage::before{content:"";position:absolute;inset:-18%;pointer-events:none;opacity:.5;
+  background:conic-gradient(from 0deg,transparent,rgba(129,52,175,.35),rgba(0,242,234,.35),transparent);
+  animation:rot 9s linear infinite; filter:blur(30px)}
+@keyframes rot{to{transform:rotate(360deg)}}
+.core{position:absolute;top:50%;left:50%;width:130px;height:130px;transform:translate(-50%,-50%);
+  border-radius:50%;display:grid;place-items:center;text-align:center;z-index:4}
+.core .core-inner{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 30% 25%,#fff,rgba(129,52,175,.6) 40%,#04040d 78%);
+  box-shadow:0 0 30px rgba(255,0,51,.7),0 0 70px rgba(129,52,175,.8),inset 0 0 20px rgba(0,242,234,.7);
+  animation:core-life 4s ease-in-out infinite}
+.core .core-inner span{font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:.2em;color:#fff;text-shadow:0 2px 16px rgba(0,0,0,.8)}
+@keyframes core-life{0%,100%{transform:scale(1)}25%{transform:scale(1.06)}50%{transform:scale(1.02)}75%{transform:scale(1.08)}}
+.ringline{position:absolute;top:50%;left:50%;border-radius:50%;transform:translate(-50%,-50%);
+  border:1px dashed rgba(255,255,255,.14)}
+.ringline.r1{width:calc(100% - 30px);height:calc(100% - 30px)}
+.ringline.r2{width:calc(100% - 130px);height:calc(100% - 130px);border-color:rgba(0,242,234,.3);animation:rot 40s linear infinite reverse}
+.ringline.r3{width:calc(100% - 230px);height:calc(100% - 230px);border-color:rgba(255,0,51,.28);animation:rot 26s linear infinite}
+.ringline .sat{position:absolute;top:0;left:50%;width:6px;height:6px;border-radius:50%;transform:translate(-50%,-50%);background:#25f4ee;box-shadow:0 0 12px #25f4ee}
+.node{position:absolute;top:50%;left:50%;width:0;height:0;z-index:3}
+.node .spin{position:absolute;transform:translate(-50%,-50%) rotate(var(--a)) translateX(var(--r));
+  animation:rot calc(var(--dur) * -1) linear infinite}
+.chip{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;
+  background:rgba(255,255,255,.06);border:1px solid var(--line);backdrop-filter:blur(6px);
+  box-shadow:0 0 24px color-mix(in srgb,currentColor 55%,transparent),inset 0 0 14px color-mix(in srgb,currentColor 30%,transparent);
+  animation:chip-life 3s ease-in-out infinite}
+.chip svg{width:32px;height:32px;filter:drop-shadow(0 0 8px currentColor)}
+@keyframes chip-life{50%{transform:scale(1.12)}}
+.chip.yt{color:#ff0033}.chip.x{color:#fff}.chip.rd{color:#ff4500}.chip.ig{color:#e1306c}.chip.tt{color:#00f2ea}.chip.fb{color:#1877f2}
+
+.scrolld{position:relative;z-index:5;text-align:center;margin:1.5rem 0 2rem;color:var(--muted);font-size:.75rem;letter-spacing:.35em;text-transform:uppercase}
+.mouse{width:22px;height:34px;margin:.7rem auto 0;border:1.5px solid var(--muted);border-radius:12px;position:relative}
+.mouse::after{content:"";position:absolute;left:50%;top:6px;width:3px;height:7px;border-radius:2px;background:#25f4ee;transform:translateX(-50%);animation:wheel 1.4s ease-in-out infinite}
+@keyframes wheel{0%{opacity:0;top:6px}40%{opacity:1}80%{opacity:0;top:20px}}
+
+/* ---------- ticker ---------- */
+.ticker{position:relative;z-index:5;overflow:hidden;border-block:1px solid var(--line);
+  padding:.9rem 0;background:rgba(255,255,255,.03)}
+.ticker-track{display:flex;gap:3rem;width:max-content;animation:tick 34s linear infinite;white-space:nowrap}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker-track span{font-family:'Bebas Neue';font-size:1.1rem;letter-spacing:.15em;color:var(--muted);display:flex;align-items:center;gap:3rem}
+.ticker-track span::after{content:"•";color:#ff0033;text-shadow:0 0 10px #ff0033}
+.ticker-track b{color:var(--ink)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* ---------- platform cards ---------- */
+.cards{padding:4rem 4vw;max-width:1280px;margin:0 auto}
+.sec-head{text-align:center;margin-bottom:3rem}
+.sec-head h2{font-size:clamp(2.2rem,6vw,3.8rem);text-transform:uppercase;
+  background:linear-gradient(90deg,#fff,#00f2ea,#8134af,#ff0033,#fff);background-size:300% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:flow 8s linear infinite}
+.sec-head p{color:var(--muted);margin-top:.4rem}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem}
+.card{position:relative;border-radius:22px;padding:1.8rem;overflow:hidden;isolation:isolate;
+  background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.015));
+  border:1px solid var(--line);
+  transform-style:preserve-3d;transition:transform .2s ease,box-shadow .3s ease;
+  opacity:0;animation:cardIn .8s cubic-bezier(.2,.9,.3,1.3) forwards}
+.card:nth-child(1){animation-delay:.05s}
+.card:nth-child(2){animation-delay:.15s}
+.card:nth-child(3){animation-delay:.25s}
+.card:nth-child(4){animation-delay:.35s}
+.card:nth-child(5){animation-delay:.45s}
+.card:nth-child(6){animation-delay:.55s}
+@keyframes cardIn{to{opacity:1;transform:translateY(0)}}
+.card::before{content:"";position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(520px circle at var(--mx,50%) var(--my,0%),color-mix(in srgb,var(--cc,var(--ig)) 32%,transparent),transparent 55%);
+  opacity:0;transition:opacity .35s}
+.card:hover::before{opacity:1}
+.card::after{content:"";position:absolute;top:-120%;left:-60%;width:60%;height:240%;z-index:-1;pointer-events:none;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.14),transparent);
+  transform:skewX(-20deg);transition:left .7s ease}
+.card:hover::after{left:130%}
+.card:hover{box-shadow:0 26px 60px -22px color-mix(in srgb,var(--cc,var(--ig)) 65%,transparent),0 0 0 1px color-mix(in srgb,var(--cc,var(--ig)) 45%,transparent);transform:translate3d(var(--tx,0),var(--ty,0),0) rotateX(var(--rx,0)) rotateY(var(--ry,0)) scale(1.02)}
+.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem;transform:translateZ(30px)}
+.logo{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;
+  background:color-mix(in srgb,var(--cc,var(--ig)) 18%,#0a0a1d);
+  border:1px solid color-mix(in srgb,var(--cc,var(--ig)) 45%,transparent);
+  animation:logo-float 3.4s ease-in-out infinite}
+.logo svg{width:28px;height:28px;filter:drop-shadow(0 0 10px color-mix(in srgb,var(--cc,var(--ig)) 70%,transparent))}
+@keyframes logo-float{50%{transform:translateY(-6px) rotate(-3deg)}}
+.badge{font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:.3rem .7rem;border-radius:99px;
+  color:color-mix(in srgb,var(--cc,var(--ig)) 90%,#fff);border:1px solid color-mix(in srgb,var(--cc,var(--ig)) 50%,transparent);
+  animation:blink 2.4s steps(2) infinite}
+h3{font-size:1.7rem;transform:translateZ(26px)}
+.handle{color:var(--muted);font-size:.85rem;margin:.15rem 0 1rem;transform:translateZ(24px)}
+.desc{color:#c9c9ee;font-size:.92rem;min-height:3.1em;transform:translateZ(22px)}
+.stats{display:flex;gap:.6rem;margin:1.2rem 0 1.4rem;transform:translateZ(20px)}
+.stat{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:.7rem .5rem;text-align:center}
+.stat b{display:block;font-size:1.05rem;color:#fff}
+.stat span{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.cta{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.85rem;border-radius:14px;
+  font-weight:700;letter-spacing:.08em;color:#fff;background:color-mix(in srgb,var(--cc,var(--ig)) 22%,transparent);
+  border:1px solid color-mix(in srgb,var(--cc,var(--ig)) 45%,transparent);
+  transition:background .3s,transform .3s;transform:translateZ(34px)}
+.cta:hover{background:color-mix(in srgb,var(--cc,var(--ig)) 55%,transparent);transform:translateZ(34px) scale(1.04)}
+.cta .arrow{transition:transform .3s}
+.card:hover .cta .arrow{transform:translateX(6px)}
+
+/* ---------- stats band ---------- */
+.band{position:relative;z-index:5;margin:2rem auto;max-width:1280px;padding:3rem 4vw;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1.6rem;
+  background:linear-gradient(120deg,rgba(255,0,51,.08),rgba(129,52,175,.08),rgba(0,242,234,.08));
+  border-block:1px solid var(--line)}
+.bigstat{text-align:center}
+.bigstat b{font-family:'Bebas Neue';font-size:clamp(2.4rem,5vw,3.6rem);display:block;
+  background:var(--grad);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:flow 5s linear infinite}
+.bigstat span{color:var(--muted);font-size:.85rem;letter-spacing:.14em;text-transform:uppercase}
+
+/* ---------- flash cta ---------- */
+.flash{position:relative;z-index:5;text-align:center;padding:4rem 4vw}
+.flash h2{font-size:clamp(2rem,5vw,3rem);text-transform:uppercase;animation:floaty 5s ease-in-out infinite}
+.btn-big{position:relative;display:inline-flex;align-items:center;gap:.7rem;margin-top:1.6rem;padding:.95rem 2.2rem;border-radius:99px;
+  background:var(--grad);background-size:200% 100%;color:#fff;font-weight:700;letter-spacing:.1em;font-size:1rem;
+  animation:flow 4s linear infinite, magnet 2.4s ease-in-out infinite;
+  box-shadow:0 0 30px rgba(129,52,175,.8),0 12px 40px -10px rgba(255,0,51,.7)}
+@keyframes magnet{0%,100%{translate:0 0}25%{translate:4px -6px}50%{translate:-3px 3px}75%{translate:5px 4px}}
+.btn-big::before{content:"";position:absolute;inset:-3px;border-radius:99px;border:2px solid transparent;padding:3px;
+  background:linear-gradient(90deg,#ff0033,#00f2ea,#ff0033) border-box;-webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;animation:flow 3s linear infinite}
+
+/* ---------- footer ---------- */
+footer{position:relative;z-index:5;text-align:center;padding:2rem 4vw 3rem;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}
+footer .heart{display:inline-block;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;animation:heartbeat 1.2s ease-in-out infinite}
+@keyframes heartbeat{0%,100%{transform:scale(1)}25%{transform:scale(1.3)}45%{transform:scale(1)}60%{transform:scale(1.2)}}
+
+/* ---------- toasts ---------- */
+#toasts{display:none}
+.toast{--tc:#25f4ee;display:flex;gap:.7rem;align-items:center;max-width:290px;padding:.8rem .95rem;border-radius:16px;
+  background:rgba(10,10,29,.85);border:1px solid color-mix(in srgb,var(--tc) 45%,transparent);
+  backdrop-filter:blur(10px);box-shadow:0 10px 30px -12px color-mix(in srgb,var(--tc) 60%,transparent);
+  animation:toastIn .5s cubic-bezier(.2,.9,.3,1.3) forwards;font-size:.8rem}
+.toast i{width:9px;height:9px;border-radius:50%;background:var(--tc);box-shadow:0 0 12px var(--tc);flex-shrink:0;animation:blink 1s steps(2) infinite}
+.toast b{display:block;color:#fff}
+.toast span{color:var(--muted)}
+.toast.out{animation:toastOut .4s ease forwards}
+@keyframes toastIn{from{opacity:0;transform:translateX(120%)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastOut{to{opacity:0;transform:translateX(140%) scale(.8)}}
+
+#confetti{position:fixed;inset:0;z-index:9000;pointer-events:none}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.9,.3,1.1)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+@media(max-width:1024px){.grid{grid-template-columns:repeat(2,1fr)}.band{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){
+  .grid{grid-template-columns:1fr}
+  .chip{width:52px;height:52px}.chip svg{width:26px;height:26px}
+  .core{width:96px;height:96px}
+  .orbit-stage{width:min(430px,92vw);height:min(430px,92vw)}
+  .band{grid-template-columns:repeat(2,1fr);gap:1.2rem}
+  #clock{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
+}
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+<div class="aurora"></div>
+<div class="grain"></div>
+<div class="cdot"></div>
+<div class="cring"></div>
+
+<nav>
+  <div class="brand"><span class="orb"></span>SOCIALHUB</div>
+  <div class="nav-right">
+    <span class="live-pill"><i></i>LIVE · 6 platforms connected</span>
+    <span id="clock"></span>
+  </div>
+</nav>
+
+<main>
+  <section class="hero">
+    <h1>Every voice.<br>One universe.</h1>
+    <p class="sub">A living portal built for <span class="typewrap" id="type"></span></p>
+    <div class="orbit-stage">
+      <div class="ringline r1"></div>
+      <div class="ringline r2"><span class="sat" style="animation:rot 3s linear infinite"></span></div>
+      <div class="ringline r3"><span class="sat" style="animation:rot 2.2s linear infinite"></span></div>
+
+      <div class="core"><div class="core-inner"><span>ALL<br>FEEDS<br>ONE</span></div></div>
+
+      <div class="node" style="--a:0deg;--r:238px;--dur:24s"><div class="spin"><a href="https://www.youtube.com/@Kasto_o" target="_blank" rel="noopener"><div class="chip yt" title="YouTube — @Kasto_o"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.4-.4-5a3 3 0 0 0-2.1-2.1C18.9 4.5 12 4.5 12 4.5s-6.9 0-8.5.4A3 3 0 0 0 1.4 7C1 8.6 1 12 1 12s0 3.4.4 5a3 3 0 0 0 2.1 2.1c1.6.4 8.5.4 8.5.4s6.9 0 8.5-.4a3 3 0 0 0 2.1-2.1c.4-1.6.4-5 .4-5z" fill="#ff0033"/><path d="M10 8.6 15.5 12 10 15.4z" fill="#fff"/></svg></div></a></div></div>
+      <div class="node" style="--a:180deg;--r:238px;--dur:24s"><div class="spin"><div class="chip x" title="X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25H21.5l-7.5 8.6L22.5 21.75h-6.9l-5.4-7-6.2 7H1.7l8-9.2L1.5 2.25h7.1l4.9 6.4 5.7-6.4zM17.1 19.8h1.9L6.95 4.1H4.9z" fill="#fff"/></svg></div></div></div>
+
+      <div class="node" style="--a:60deg;--r:188px;--dur:32s"><div class="spin"><div class="chip rd" title="Reddit"><svg viewBox="0 0 24 24"><circle cx="12" cy="14" r="8" fill="#ff4500"/><circle cx="8" cy="13.5" r="1.6" fill="#fff"/><circle cx="8" cy="13.5" r=".6" fill="#1c1917"/><circle cx="16" cy="13.5" r="1.6" fill="#fff"/><circle cx="16" cy="13.5" r=".6" fill="#1c1917"/><path d="M8.5 17.5c1.9 1.3 5.1 1.3 7 0" stroke="#fff" stroke-width="1.3" fill="none" stroke-linecap="round"/><path d="M12 6 10.5 3.4" stroke="#ff4500" stroke-width="1.6" stroke-linecap="round"/><circle cx="10.5" cy="3.2" r="1.2" fill="#7cc5ff"/></svg></div></div></div>
+      <div class="node" style="--a:240deg;--r:188px;--dur:32s"><div class="spin"><a href="https://www.facebook.com/profile.php?id=61591662810004" target="_blank" rel="noopener"><div class="chip fb" title="Facebook — your profile"><svg viewBox="0 0 24 24"><path d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.4c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9V12h3.4l-.5 3.5h-2.9v8.4A12 12 0 0 0 24 12z" fill="#1877f2"/></svg></div></a></div></div>
+
+      <div class="node" style="--a:120deg;--r:138px;--dur:20s"><div class="spin"><a href="https://www.instagram.com/kasto_00/" target="_blank" rel="noopener"><div class="chip ig" title="Instagram — kasto_00"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="2.8" y="2.8" width="18.4" height="18.4" rx="5.2"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.4" cy="6.6" r="1.2" fill="#fff" stroke="none"/></svg></div></a></div></div>
+      <div class="node" style="--a:300deg;--r:138px;--dur:20s"><div class="spin"><div class="chip tt" title="TikTok"><svg viewBox="0 0 24 24"><path d="M16.5 3c.3 2.1 1.6 3.6 3.5 4v3.2c-1.3.1-2.6-.3-3.5-1v6.1c0 3-2.2 5.2-4.9 5.2S7.4 18.3 7.4 15.6c0-2.7 2.2-5 4.9-5l.8.1v3.3l-.9-.1c-1.1 0-1.9.9-1.9 2s.8 1.9 1.9 1.9c1 0 1.8-.8 1.8-2.1z" fill="#00f2ea"/></svg></div></div></div>
+    </div>
+    <div class="scrolld">scroll to explore<div class="mouse"></div></div>
+  </section>
+
+  <div class="ticker">
+    <div class="ticker-track">
+      <span><b>TRENDING NOW</b></span><span>breakfast meme goes supernova</span><span><b>#OneUniverse</b></span><span>ai dance remixes hit 1B</span><span><b>LIVE</b> 6 feeds synced</span><span>"the algorithm said hi"</span><span><b>WORLD</b> streams 24/7</span><span>front page of everything</span>
+      <span><b>TRENDING NOW</b></span><span>breakfast meme goes supernova</span><span><b>#OneUniverse</b></span><span>ai dance remixes hit 1B</span><span><b>LIVE</b> 6 feeds synced</span><span>"the algorithm said hi"</span><span><b>WORLD</b> streams 24/7</span><span>front page of everything</span>
+    </div>
+  </div>
+
+  <section class="cards" id="platforms">
+    <div class="sec-head reveal">
+      <h2>The Constellation</h2>
+      <p>Six worlds. Zero scrolling limits. Hover, click, and feel the feed.</p>
+    </div>
+    <div class="grid">
+
+      <a class="card" href="https://www.youtube.com/@Kasto_o" target="_blank" rel="noopener" style="--cc:#ff0033">
+        <div class="card-top"><div class="logo"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.4-.4-5a3 3 0 0 0-2.1-2.1C18.9 4.5 12 4.5 12 4.5s-6.9 0-8.5.4A3 3 0 0 0 1.4 7C1 8.6 1 12 1 12s0 3.4.4 5a3 3 0 0 0 2.1 2.1c1.6.4 8.5.4 8.5.4s6.9 0 8.5-.4a3 3 0 0 0 2.1-2.1c.4-1.6.4-5 .4-5z" fill="#ff0033"/><path d="M10 8.6 15.5 12 10 15.4z" fill="#fff"/></svg></div><span class="badge">video</span></div>
+        <h3>YouTube</h3>
+        <p class="handle">@Kasto_o · your real channel</p>
+        <p class="desc">Every video that matters, gravity pulled into one gravity well.</p>
+        <div class="stats">
+          <div class="stat"><b data-count="2.8">0</b><span>B users</span></div>
+          <div class="stat"><b data-count="500">0</b><span>hr/min<br>uploaded</span></div>
+        </div>
+        <span class="cta">OPEN YOUTUBE <span class="arrow">→</span></span>
+      </a>
+
+      <a class="card" href="https://x.com" target="_blank" rel="noopener" style="--cc:#e7e7f8">
+        <div class="card-top"><div class="logo"><svg viewBox="0 0 24 24"><path d="M18.244 2.25H21.5l-7.5 8.6L22.5 21.75h-6.9l-5.4-7-6.2 7H1.7l8-9.2L1.5 2.25h7.1l4.9 6.4 5.7-6.4zM17.1 19.8h1.9L6.95 4.1H4.9z" fill="#fff"/></svg></div><span class="badge">micro-blog</span></div>
+        <h3>X</h3>
+        <p class="handle">@everyvoice · what's happening</p>
+        <p class="desc">The pulse of the planet, ticking in real time. Say it in 280.</p>
+        <div class="stats">
+          <div class="stat"><b data-count="611">0</b><span>M daily posts</span></div>
+          <div class="stat"><b data-count="450">0</b><span>M users</span></div>
+        </div>
+        <span class="cta">OPEN X <span class="arrow">→</span></span>
+      </a>
+
+      <a class="card" href="https://www.reddit.com" target="_blank" rel="noopener" style="--cc:#ff4500">
+        <div class="card-top"><div class="logo"><svg viewBox="0 0 24 24"><circle cx="12" cy="14" r="8" fill="#ff4500"/><path d="M12 6 10.5 3.4" stroke="#ff4500" stroke-width="1.6" stroke-linecap="round"/><circle cx="10.5" cy="3.2" r="1.3" fill="#7cc5ff"/><circle cx="8" cy="13.5" r="1.6" fill="#fff"/><circle cx="8" cy="13.5" r=".6" fill="#1c1917"/><circle cx="16" cy="13.5" r="1.6" fill="#fff"/><circle cx="16" cy="13.5" r=".6" fill="#1c1917"/><path d="M8.5 17.5c1.9 1.3 5.1 1.3 7 0" stroke="#fff" stroke-width="1.3" fill="none" stroke-linecap="round"/></svg></div><span class="badge">forum</span></div>
+        <h3>Reddit</h3>
+        <p class="handle">r/all · the front page of the universe</p>
+        <p class="desc">Communities colliding. Truth, trivia, and lore sorted by upvotes.</p>
+        <div class="stats">
+          <div class="stat"><b data-count="1">0</b><span>B monthly visits</span></div>
+          <div class="stat"><b data-count="100">0</b><span>k subreddits</span></div>
+        </div>
+        <span class="cta">OPEN REDDIT <span class="arrow">→</span></span>
+      </a>
+
+      <a class="card" href="https://www.instagram.com/kasto_00/" target="_blank" rel="noopener" style="--cc:#e1306c">
+        <div class="card-top"><div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="2.8" y="2.8" width="18.4" height="18.4" rx="5.2"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.4" cy="6.6" r="1.2" fill="#fff" stroke="none"/></svg></div><span class="badge">photos</span></div>
+        <h3>Instagram</h3>
+        <p class="handle">@kasto_00 · your real account</p>
+        <p class="desc">Colors, reels, and stories frozen mid-supernova, then replayed.</p>
+        <div class="stats">
+          <div class="stat"><b data-count="2">0</b><span>B users</span></div>
+          <div class="stat"><b data-count="95">0</b><span>M photos/day</span></div>
+        </div>
+        <span class="cta">OPEN INSTAGRAM <span class="arrow">→</span></span>
+      </a>
+
+      <a class="card" href="https://www.tiktok.com" target="_blank" rel="noopener" style="--cc:#00f2ea">
+        <div class="card-top"><div class="logo"><svg viewBox="0 0 24 24"><path d="M16.5 3c.3 2.1 1.6 3.6 3.5 4v3.2c-1.3.1-2.6-.3-3.5-1v6.1c0 3-2.2 5.2-4.9 5.2S7.4 18.3 7.4 15.6c0-2.7 2.2-5 4.9-5l.8.1v3.3l-.9-.1c-1.1 0-1.9.9-1.9 2s.8 1.9 1.9 1.9c1 0 1.8-.8 1.8-2.1z" fill="#00f2ea"/></svg></div><span class="badge">shorts</span></div>
+        <h3>TikTok</h3>
+        <p class="handle">@vibesync · dance the galaxy</p>
+        <p class="desc">Fifteen seconds that outlive centuries. Vibes at lightspeed.</p>
+        <div class="stats">
+          <div class="stat"><b data-count="1.5">0</b><span>B users</span></div>
+          <div class="stat"><b data-count="167">0</b><span>M downloads</span></div>
+        </div>
+        <span class="cta">OPEN TIKTOK <span class="arrow">→</span></span>
+      </a>
+
+      <a class="card" href="https://www.facebook.com/profile.php?id=61591662810004" target="_blank" rel="noopener" style="--cc:#1877f2">
+        <div class="card-top"><div class="logo"><svg viewBox="0 0 24 24"><path d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.4c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9V12h3.4l-.5 3.5h-2.9v8.4A12 12 0 0 0 24 12z" fill="#1877f2"/></svg></div><span class="badge">friends</span></div>
+        <h3>Facebook</h3>
+        <p class="handle">your real profile · groups &amp; events</p>
+        <p class="desc">Friendships, groups, and Friday night plans across every corner.</p>
+        <div class="stats">
+          <div class="stat"><b data-count="3">0</b><span>B users</span></div>
+          <div class="stat"><b data-count="200">0</b><span>M groups</span></div>
+        </div>
+        <span class="cta">OPEN FACEBOOK <span class="arrow">→</span></span>
+      </a>
+
+    </div>
+  </section>
+
+  <div class="band">
+    <div class="bigstat reveal d1"><b data-count="6">0</b><span>platforms</span></div>
+    <div class="bigstat reveal d2"><b data-ref="4.8">0</b><span>B+ creators</span></div>
+    <div class="bigstat reveal d3"><b data-ref="535">0</b><span>M posts / day</span></div>
+    <div class="bigstat reveal d4"><b>∞</b><span>content / second</span></div>
+  </div>
+
+  <section class="flash">
+    <h2>One feed.<br>Infinite life.</h2>
+    <a class="btn-big" href="#platforms">ENTER THE CONSTELLATION ↓</a>
+  </section>
+</main>
+
+<footer>
+  Made with <span class="heart">♥</span> across spacetime — SocialHub, the living universe of every voice.
+</footer>
+
+<div id="toasts"></div>
+<canvas id="confetti"></canvas>
+
+<script>
+// ---------- starfield ----------
+(function(){
+  const c=document.getElementById('stars'),x=c.getContext('2d');let W,H,stars=[],shoot=null;
+  function size(){W=c.width=innerWidth;H=c.height=innerHeight;}
+  function makeStars(){
+    stars=[];
+    const n=Math.floor((W*H)/2600);
+    for(let i=0;i<n;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.6+.2,t:Math.random()*Math.PI*2,s:Math.random()*.02+.005,c:Math.random()<.12?'#25f4ee':Math.random()<.12?'#ff0033':'#fff'});
+  }
+  function frame(t){
+    x.clearRect(0,0,W,H);
+    for(const s of stars){
+      s.t+=s.s;
+      const a=.3+Math.abs(Math.sin(s.t))*.7;
+      x.beginPath();x.arc(s.x,s.y,s.r,0,7);x.fillStyle=s.c;x.globalAlpha=a;x.fill();
+    }
+    x.globalAlpha=1;
+    if(shoot){
+      shoot.x+=shoot.vx*16;shoot.y+=shoot.vy*16;shoot.life-=16;
+      if(shoot.life<=0){shoot=null;}
+      else{
+        const g=x.createLinearGradient(shoot.x,shoot.y,shoot.x-shoot.vx*40,shoot.y-shoot.vy*40);
+        g.addColorStop(0,'rgba(255,255,255,.9)');g.addColorStop(1,'rgba(255,255,255,0)');
+        x.strokeStyle=g;x.lineWidth=2;x.beginPath();x.moveTo(shoot.x,shoot.y);x.lineTo(shoot.x-shoot.vx*40,shoot.y-shoot.vy*40);x.stroke();
+      }
+    }else if(Math.random()<.004){
+      const ang=Math.PI*(Math.random()*4+1.4);
+      shoot={x:Math.random()*W*1.2,y:Math.random()*H*.5,vx:Math.cos(ang)*6,vy:Math.sin(ang)*6,life:900};
+    }
+    requestAnimationFrame(frame);
+  }
+  addEventListener('resize',()=>{size();makeStars();});
+  size();makeStars();requestAnimationFrame(frame);
+})();
+
+// ---------- custom cursor + sparks ----------
+(function(){
+  const dot=document.querySelector('.cdot'),ring=document.querySelector('.cring'),body=document.body;
+  let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my,last=0;
+  addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    dot.style.left=mx+'px';dot.style.top=my+'px';
+    const now=performance.now();
+    if(now-last>48){
+      last=now;
+      const s=document.createElement('div');s.className='spark';
+      s.style.left=mx+'px';s.style.top=my+'px';
+      s.style.background=`hsl(${Math.random()*360},90%,60%)`;
+      document.body.appendChild(s);setTimeout(()=>s.remove(),700);
+    }
+    const t=e.target;
+    body.classList.toggle('cursor-hover',!!(t.closest&&t.closest('a,.cta,.btn-big,.chip,.card')));
+  });
+  (function loop(){
+    rx+=(mx-rx)*.14;ry+=(my-ry)*.14;
+    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    requestAnimationFrame(loop);
+  })();
+})();
+
+// ---------- 3D tilt cards + confetti on click ----------
+(function(){
+  const cards=document.querySelectorAll('.card');
+  cards.forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+      card.style.setProperty('--rx',((0.5-py)*10)+'deg');
+      card.style.setProperty('--ry',((px-0.5)*10)+'deg');
+      card.style.setProperty('--tx',((px-0.5)*26)+'px');
+      card.style.setProperty('--ty',((py-0.5)*20)+'px');
+      card.style.setProperty('--mx',(px*100)+'%');
+      card.style.setProperty('--my',(py*100)+'%');
+    });
+    card.addEventListener('mouseleave',()=>{
+      card.style.setProperty('--rx','0deg');card.style.setProperty('--ry','0deg');
+      card.style.setProperty('--tx','0px');card.style.setProperty('--ty','0px');
+    });
+    card.addEventListener('click',e=>burst(e.clientX,e.clientY,26));
+  });
+})();
+
+// ---------- confetti ----------
+const cvs=document.getElementById('confetti'),cx=cvs.getContext('2d');
+let ps=[];
+function sizeC(){cvs.width=innerWidth;cvs.height=innerHeight;}
+sizeC();addEventListener('resize',sizeC);
+function burst(x,y,n){
+  const cols=['#ff0033','#00f2ea','#f5f5f5','#8134af','#ff4500','#1877f2','#e1306c'];
+  for(let i=0;i<n;i++){
+    const a=Math.random()*Math.PI*2,v=Math.random()*9+3;
+    ps.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-5,g:.22,rot:Math.random()*360,vr:(Math.random()-.5)*16,t:0,life:70+Math.random()*40,c:cols[(Math.random()*cols.length)|0],s:5+Math.random()*6,shape:Math.random()<.6?'r':'c'});
+  }
+  if(ps.length>400)ps=ps.slice(-400);
+}
+(function tickC(){
+  cx.clearRect(0,0,cvs.width,cvs.height);
+  ps=ps.filter(p=>p.t<p.life);
+  for(const p of ps){
+    p.t++;p.x+=p.vx;p.y+=p.vy;p.vy+=p.g;p.vx*=.99;p.rot+=p.vr;
+    cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot*Math.PI/180);
+    cx.globalAlpha=1-(p.t/p.life);
+    cx.fillStyle=p.c;
+    if(p.shape==='r'){cx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);}
+    else{cx.beginPath();cx.arc(0,0,p.s/3,0,7);cx.fill();}
+    cx.restore();
+  }
+  requestAnimationFrame(tickC);
+})();
+burst(innerWidth/2,innerHeight/3,120);
+
+// ---------- typewriter ----------
+(function(){
+  const words=['YouTube','X','Reddit','Instagram','TikTok','Facebook','and most of all — YOU.','normal sleep schedules'];
+  const el=document.getElementById('type');if(!el)return;
+  let w=0,i=0,del=false;
+  (function step(){
+    const word=words[w];
+    el.textContent=word.slice(0,i);
+    let wait=del?45:110;
+    if(!del&&i===word.length){wait=1500;del=true;}
+    else if(del&&i===0){del=false;w=(w+1)%words.length;wait=250;}
+    i+=del?-1:1;
+    setTimeout(step,wait);
+  })();
+})();
+
+// ---------- clock ----------
+(function(){
+  const el=document.getElementById('clock');
+  function tick(){
+    const d=new Date();
+    el.textContent=d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  }
+  tick();setInterval(tick,1000);
+})();
+
+// ---------- animated counters ----------
+(function(){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    io.unobserve(e.target);
+    const el=e.target;
+    if(el.dataset.ref!==undefined){
+      const target=parseFloat(el.dataset.ref),start=performance.now(),dur=1800;
+      (function up(t){
+        const p=Math.min(1,(t-start)/dur),v=1-Math.pow(1-p,3);
+        el.textContent=(target*v).toFixed(1)+'B';
+        if(p<1)requestAnimationFrame(up);
+      })(start);
+    }else if(el.dataset.count!==undefined){
+      const target=parseFloat(el.dataset.count),start=performance.now(),dur=1800;
+      (function up(t){
+        const p=Math.min(1,(t-start)/dur),v=1-Math.pow(1-p,3);
+        const val=target*v;
+        el.textContent=(val>=1?val.toFixed(1):Math.round(val).toLocaleString());
+        if(p<1)requestAnimationFrame(up);
+      })(start);
+    }
+  }),{threshold:.4});
+  document.querySelectorAll('[data-count],[data-ref]').forEach(el=>io.observe(el));
+})();
+
+// ---------- scroll reveal ----------
+(function(){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+</script>
+</body>
+</html>
