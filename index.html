@@ -98,25 +98,43 @@ section{position:relative;z-index:5}
   animation:rot 9s linear infinite; filter:blur(30px)}
 @keyframes rot{to{transform:rotate(360deg)}}
 .core{position:absolute;top:50%;left:50%;width:132px;height:132px;transform:translate(-50%,-50%);
-  border-radius:50%;display:grid;place-items:center;text-align:center;z-index:4}
-.core::before{content:"";position:absolute;inset:-14px;border-radius:50%;
+  border-radius:50%;display:grid;place-items:center;text-align:center;z-index:4;
+  animation:nucleus-pulse 3.2s ease-in-out infinite}
+@keyframes nucleus-pulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.06)}}
+.core::before{content:"";position:absolute;inset:-20px;border-radius:50%;
   background:conic-gradient(from 0deg,#ff0033,#8134af,#00f2ea,#ff0033);
-  animation:rot 4s linear infinite;filter:blur(10px);opacity:.85}
+  animation:rot 3.5s linear infinite;filter:blur(16px);opacity:.9}
 .core .core-halo{position:absolute;inset:0;border-radius:50%;
-  background:radial-gradient(circle at 50% 50%,#fff 0%,rgba(129,52,175,.5) 60%,transparent 80%);
-  animation:pulse 1.6s ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(.96);opacity:.7}50%{transform:scale(1.06);opacity:1}}
+  background:radial-gradient(circle at 50% 50%,#fff 0%,rgba(129,52,175,.55) 55%,transparent 80%);
+  animation:halo-breathe 1.8s ease-in-out infinite}
+@keyframes halo-breathe{0%,100%{transform:scale(.94);opacity:.6}50%{transform:scale(1.1);opacity:1}}
 .core .core-inner{position:relative;width:100%;height:100%;border-radius:50%;display:grid;place-items:center;
-  background:radial-gradient(circle at 30% 25%,#3a3a5e,rgba(129,52,175,.7) 45%,#04040d 82%);
-  box-shadow:0 0 30px rgba(255,0,51,.7),0 0 70px rgba(129,52,175,.8),inset 0 0 24px rgba(0,242,234,.7);
+  background:radial-gradient(circle at 30% 25%,#4a4a78,rgba(129,52,175,.8) 45%,#04040d 85%);
+  box-shadow:0 0 30px rgba(255,0,51,.7),0 0 70px rgba(129,52,175,.9),inset 0 0 26px rgba(0,242,234,.8);
   overflow:hidden}
-.core .core-inner svg{position:absolute;inset:0;width:100%;height:100%}
-.core .core-inner .cring1{transform-origin:center;animation:rot 6s linear infinite}
-.core .core-inner .cring2{transform-origin:center;animation:rot 9s linear infinite reverse}
-.core .core-inner span{position:relative;font-family:'Bebas Neue';font-size:1.05rem;letter-spacing:.16em;color:#fff;
-  text-shadow:0 2px 16px rgba(0,0,0,.9);animation:flicker 2.4s ease-in-out infinite}
-@keyframes flicker{0%,100%{opacity:1}45%{opacity:1}50%{opacity:.4}55%{opacity:1}80%{opacity:.85}}
-.core .core-inner span small{display:block;font-size:.62rem;letter-spacing:.3em;color:#25f4ee;text-shadow:0 0 12px #25f4ee}
+.core .core-swirl{position:absolute;inset:-40%;border-radius:50%;
+  background:conic-gradient(from 0deg,transparent 0 20%,rgba(0,242,234,.35) 30%,transparent 45% 75%,rgba(255,0,51,.3) 85%,transparent);
+  animation:rot 5s linear infinite}
+.bubble{position:absolute;bottom:-10px;border-radius:50%;background:rgba(0,242,234,.5);
+  box-shadow:inset -2px -3px 5px rgba(0,0,0,.3),0 0 8px rgba(0,242,234,.8);animation:bub linear infinite}
+.bubble.b1{left:22%;width:7px;height:7px;animation-duration:3.4s;animation-delay:0s}
+.bubble.b2{left:48%;width:5px;height:5px;animation-duration:2.8s;animation-delay:.7s}
+.bubble.b3{left:70%;width:9px;height:9px;animation-duration:4s;animation-delay:1.3s}
+.bubble.b4{left:36%;width:4px;height:4px;animation-duration:2.4s;animation-delay:.4s}
+.bubble.b5{left:62%;width:6px;height:6px;animation-duration:3.1s;animation-delay:1.8s}
+@keyframes bub{0%{transform:translateY(0) scale(1);opacity:0}10%{opacity:.9}100%{transform:translateY(-150px) scale(1.4);opacity:0}}
+.core .core-inner span{position:relative;font-family:'Bebas Neue';font-size:1.35rem;letter-spacing:.18em;color:#fff;
+  text-shadow:0 2px 16px rgba(0,0,0,.9);animation:label-flicker 2.6s ease-in-out infinite}
+@keyframes label-flicker{0%,100%{opacity:1;transform:scale(1)}30%{opacity:1}38%{opacity:.5;transform:scale(.97)}50%{opacity:1;transform:scale(1.02)}82%{opacity:.9}}
+.core .core-ring{position:absolute;inset:-8px;border-radius:50%;
+  border:2px solid rgba(37,244,238,.5);transform:scaleX(1.15) rotate(-18deg);
+  animation:ring-roll 3s ease-in-out infinite;box-shadow:0 0 14px rgba(37,244,238,.5)}
+@keyframes ring-roll{0%,100%{transform:scaleX(1.15) rotate(-18deg) translateX(0);opacity:.7}50%{transform:scaleX(1.15) rotate(-18deg) translateX(6px);opacity:1}}
+.core .core-dot{position:absolute;width:5px;height:5px;border-radius:50%;background:#25f4ee;box-shadow:0 0 10px #25f4ee;top:50%;left:50%;animation:dot-orb 4s linear infinite}
+.core .core-dot.d1{animation-duration:4s}
+.core .core-dot.d2{animation-duration:6s;width:4px;height:4px;background:#ff0033;box-shadow:0 0 10px #ff0033}
+.core .core-dot.d3{animation-duration:5s;width:6px;height:6px;background:#8134af;box-shadow:0 0 10px #8134af}
+@keyframes dot-orb{from{transform:rotate(0deg) translateX(78px) rotate(0deg)}to{transform:rotate(360deg) translateX(78px) rotate(-360deg)}}
 .ringline{position:absolute;top:50%;left:50%;border-radius:50%;transform:translate(-50%,-50%);
   border:1px dashed rgba(255,255,255,.14)}
 .ringline.r1{width:calc(100% - 30px);height:calc(100% - 30px)}
@@ -314,10 +332,16 @@ footer .heart{display:inline-block;background:var(--grad);-webkit-background-cli
       <div class="ringline r2"><span class="sat" style="animation:rot 3s linear infinite"></span></div>
       <div class="ringline r3"><span class="sat" style="animation:rot 2.2s linear infinite"></span></div>
 
-      <div class="core"><div class="core-inner">
-        <svg viewBox="0 0 132 132" class="core-svg"><defs><linearGradient id="cgrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff0033"/><stop offset=".5" stop-color="#8134af"/><stop offset="1" stop-color="#00f2ea"/></linearGradient></defs><g fill="none"><circle cx="66" cy="66" r="58" stroke="url(#cgrad)" stroke-width="2" stroke-dasharray="4 10" class="cring1"/><circle cx="66" cy="66" r="50" stroke="url(#cgrad)" stroke-width="1.5" stroke-dasharray="30 6 6 6" class="cring2"/></g></svg>
-        <span id="core-label">KASTO<small>LIVE UNIVERSE</small></span>
-      </div></div>
+      <div class="core">
+        <div class="core-halo"></div>
+        <div class="core-inner">
+          <div class="core-swirl"></div>
+          <div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div><div class="bubble b4"></div><div class="bubble b5"></div>
+          <span id="core-label">KASTO</span>
+        </div>
+        <div class="core-ring"></div>
+        <div class="core-dot d1"></div><div class="core-dot d2"></div><div class="core-dot d3"></div>
+      </div>
 
       <div class="node" style="--a:0deg;--r:238px;--dur:24s"><div class="spin"><a href="https://www.youtube.com/@Kasto_o" target="_blank" rel="noopener"><div class="chip yt" title="YouTube — @Kasto_o"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.4-.4-5a3 3 0 0 0-2.1-2.1C18.9 4.5 12 4.5 12 4.5s-6.9 0-8.5.4A3 3 0 0 0 1.4 7C1 8.6 1 12 1 12s0 3.4.4 5a3 3 0 0 0 2.1 2.1c1.6.4 8.5.4 8.5.4s6.9 0 8.5-.4a3 3 0 0 0 2.1-2.1c.4-1.6.4-5 .4-5z" fill="#ff0033"/><path d="M10 8.6 15.5 12 10 15.4z" fill="#fff"/></svg></div></a></div></div>
       <div class="node" style="--a:180deg;--r:238px;--dur:24s"><div class="spin"><a href="https://x.com/Kasto_Klay" target="_blank" rel="noopener"><div class="chip x" title="X — @Kasto_Klay"><svg viewBox="0 0 24 24"><path d="M18.244 2.25H21.5l-7.5 8.6L22.5 21.75h-6.9l-5.4-7-6.2 7H1.7l8-9.2L1.5 2.25h7.1l4.9 6.4 5.7-6.4zM17.1 19.8h1.9L6.95 4.1H4.9z" fill="#fff"/></svg></div></a></div></div>
@@ -627,7 +651,7 @@ burst(innerWidth/2,innerHeight/3,120);
   const el=document.getElementById('core-label');if(!el)return;
   const names=['KASTO','YOUTUBE','X','REDDIT','INSTAGRAM','TIKTOK','FACEBOOK'];
   let i=0;
-  setInterval(()=>{i=(i+1)%names.length;el.innerHTML=names[i]+'<small>LIVE UNIVERSE</small>';},1800);
+  setInterval(()=>{i=(i+1)%names.length;el.textContent=names[i];},1800);
 })();
 
 // ---------- live stats fetch ----------
