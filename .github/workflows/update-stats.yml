@@ -1,0 +1,26 @@
+name: Update Social Stats
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch YouTube stats
+        env:
+          YT_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: |
+          echo "{\"yt\": $(curl -s "https://www.googleapis.com/youtube/v3/channels?part=statistics&forHandle=@Kasto_o&key=${YT_KEY}" | python3 -c "import sys,json;d=json.load(sys.stdin)['items'][0]['statistics'];print(json.dumps(d))")}" > stats.json
+
+      - name: Commit updated stats
+        run: |
+          git config user.name "kasto-bot"
+          git config user.email "kasto-bot@users.noreply.github.com"
+          git add stats.json
+          git diff --cached --quiet && echo "no changes" || git commit -m "Auto-update stats"
+          git push
