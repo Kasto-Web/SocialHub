@@ -97,14 +97,26 @@ section{position:relative;z-index:5}
   background:conic-gradient(from 0deg,transparent,rgba(129,52,175,.35),rgba(0,242,234,.35),transparent);
   animation:rot 9s linear infinite; filter:blur(30px)}
 @keyframes rot{to{transform:rotate(360deg)}}
-.core{position:absolute;top:50%;left:50%;width:130px;height:130px;transform:translate(-50%,-50%);
+.core{position:absolute;top:50%;left:50%;width:132px;height:132px;transform:translate(-50%,-50%);
   border-radius:50%;display:grid;place-items:center;text-align:center;z-index:4}
-.core .core-inner{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;
-  background:radial-gradient(circle at 30% 25%,#fff,rgba(129,52,175,.6) 40%,#04040d 78%);
-  box-shadow:0 0 30px rgba(255,0,51,.7),0 0 70px rgba(129,52,175,.8),inset 0 0 20px rgba(0,242,234,.7);
-  animation:core-life 4s ease-in-out infinite}
-.core .core-inner span{font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:.2em;color:#fff;text-shadow:0 2px 16px rgba(0,0,0,.8)}
-@keyframes core-life{0%,100%{transform:scale(1)}25%{transform:scale(1.06)}50%{transform:scale(1.02)}75%{transform:scale(1.08)}}
+.core::before{content:"";position:absolute;inset:-14px;border-radius:50%;
+  background:conic-gradient(from 0deg,#ff0033,#8134af,#00f2ea,#ff0033);
+  animation:rot 4s linear infinite;filter:blur(10px);opacity:.85}
+.core .core-halo{position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%,#fff 0%,rgba(129,52,175,.5) 60%,transparent 80%);
+  animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(.96);opacity:.7}50%{transform:scale(1.06);opacity:1}}
+.core .core-inner{position:relative;width:100%;height:100%;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 30% 25%,#3a3a5e,rgba(129,52,175,.7) 45%,#04040d 82%);
+  box-shadow:0 0 30px rgba(255,0,51,.7),0 0 70px rgba(129,52,175,.8),inset 0 0 24px rgba(0,242,234,.7);
+  overflow:hidden}
+.core .core-inner svg{position:absolute;inset:0;width:100%;height:100%}
+.core .core-inner .cring1{transform-origin:center;animation:rot 6s linear infinite}
+.core .core-inner .cring2{transform-origin:center;animation:rot 9s linear infinite reverse}
+.core .core-inner span{position:relative;font-family:'Bebas Neue';font-size:1.05rem;letter-spacing:.16em;color:#fff;
+  text-shadow:0 2px 16px rgba(0,0,0,.9);animation:flicker 2.4s ease-in-out infinite}
+@keyframes flicker{0%,100%{opacity:1}45%{opacity:1}50%{opacity:.4}55%{opacity:1}80%{opacity:.85}}
+.core .core-inner span small{display:block;font-size:.62rem;letter-spacing:.3em;color:#25f4ee;text-shadow:0 0 12px #25f4ee}
 .ringline{position:absolute;top:50%;left:50%;border-radius:50%;transform:translate(-50%,-50%);
   border:1px dashed rgba(255,255,255,.14)}
 .ringline.r1{width:calc(100% - 30px);height:calc(100% - 30px)}
@@ -302,7 +314,10 @@ footer .heart{display:inline-block;background:var(--grad);-webkit-background-cli
       <div class="ringline r2"><span class="sat" style="animation:rot 3s linear infinite"></span></div>
       <div class="ringline r3"><span class="sat" style="animation:rot 2.2s linear infinite"></span></div>
 
-      <div class="core"><div class="core-inner"><span>ALL<br>FEEDS<br>ONE</span></div></div>
+      <div class="core"><div class="core-inner">
+        <svg viewBox="0 0 132 132" class="core-svg"><defs><linearGradient id="cgrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff0033"/><stop offset=".5" stop-color="#8134af"/><stop offset="1" stop-color="#00f2ea"/></linearGradient></defs><g fill="none"><circle cx="66" cy="66" r="58" stroke="url(#cgrad)" stroke-width="2" stroke-dasharray="4 10" class="cring1"/><circle cx="66" cy="66" r="50" stroke="url(#cgrad)" stroke-width="1.5" stroke-dasharray="30 6 6 6" class="cring2"/></g></svg>
+        <span id="core-label">KASTO<small>LIVE UNIVERSE</small></span>
+      </div></div>
 
       <div class="node" style="--a:0deg;--r:238px;--dur:24s"><div class="spin"><a href="https://www.youtube.com/@Kasto_o" target="_blank" rel="noopener"><div class="chip yt" title="YouTube — @Kasto_o"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.4-.4-5a3 3 0 0 0-2.1-2.1C18.9 4.5 12 4.5 12 4.5s-6.9 0-8.5.4A3 3 0 0 0 1.4 7C1 8.6 1 12 1 12s0 3.4.4 5a3 3 0 0 0 2.1 2.1c1.6.4 8.5.4 8.5.4s6.9 0 8.5-.4a3 3 0 0 0 2.1-2.1c.4-1.6.4-5 .4-5z" fill="#ff0033"/><path d="M10 8.6 15.5 12 10 15.4z" fill="#fff"/></svg></div></a></div></div>
       <div class="node" style="--a:180deg;--r:238px;--dur:24s"><div class="spin"><a href="https://x.com/Kasto_Klay" target="_blank" rel="noopener"><div class="chip x" title="X — @Kasto_Klay"><svg viewBox="0 0 24 24"><path d="M18.244 2.25H21.5l-7.5 8.6L22.5 21.75h-6.9l-5.4-7-6.2 7H1.7l8-9.2L1.5 2.25h7.1l4.9 6.4 5.7-6.4zM17.1 19.8h1.9L6.95 4.1H4.9z" fill="#fff"/></svg></div></a></div></div>
@@ -605,6 +620,14 @@ burst(innerWidth/2,innerHeight/3,120);
     }
   }),{threshold:.4});
   document.querySelectorAll('[data-count],[data-ref]').forEach(el=>io.observe(el));
+})();
+
+// ---------- core label cycle ----------
+(function(){
+  const el=document.getElementById('core-label');if(!el)return;
+  const names=['KASTO','YOUTUBE','X','REDDIT','INSTAGRAM','TIKTOK','FACEBOOK'];
+  let i=0;
+  setInterval(()=>{i=(i+1)%names.length;el.innerHTML=names[i]+'<small>LIVE UNIVERSE</small>';},1800);
 })();
 
 // ---------- live stats fetch ----------
