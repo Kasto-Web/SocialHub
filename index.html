@@ -117,9 +117,16 @@ section{position:relative;z-index:5}
 .chip{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;
   background:rgba(255,255,255,.06);border:1px solid var(--line);backdrop-filter:blur(6px);
   box-shadow:0 0 24px color-mix(in srgb,currentColor 55%,transparent),inset 0 0 14px color-mix(in srgb,currentColor 30%,transparent);
-  animation:chip-life 3s ease-in-out infinite}
-.chip svg{width:32px;height:32px;filter:drop-shadow(0 0 8px currentColor)}
-@keyframes chip-life{50%{transform:scale(1.12)}}
+  animation:chip-life 3s ease-in-out infinite;
+  transition:transform .25s cubic-bezier(.2,2.5,.4,1),box-shadow .25s,background .25s}
+.chip svg,.chip img{width:32px;height:32px;filter:drop-shadow(0 0 8px currentColor);transition:transform .3s cubic-bezier(.2,2.5,.4,1)}
+.chip:hover,.chip:hover svg,.chip:hover img{animation-play-state:paused}
+a:hover .chip,.chip:hover{
+  transform:scale(1.28) rotate(-8deg);
+  background:color-mix(in srgb,currentColor 28%,rgba(4,4,13,.7));
+  box-shadow:0 0 34px color-mix(in srgb,currentColor 90%,transparent),0 0 70px color-mix(in srgb,currentColor 50%,transparent),inset 0 0 18px color-mix(in srgb,currentColor 40%,transparent)}
+a:hover .chip svg,a:hover .chip img,.chip:hover svg,.chip:hover img{transform:scale(1.15) rotate(14deg)}
+@keyframes chip-life{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
 .chip.yt{color:#ff0033}.chip.x{color:#fff}.chip.rd{color:#ff4500}.chip.ig{color:#e1306c}.chip.tt{color:#00f2ea}.chip.fb{color:#1877f2}
 
 .scrolld{position:relative;z-index:5;text-align:center;margin:1.5rem 0 2rem;color:var(--muted);font-size:.75rem;letter-spacing:.35em;text-transform:uppercase}
@@ -212,6 +219,24 @@ h3{font-size:1.7rem;transform:translateZ(26px)}
 .btn-big::before{content:"";position:absolute;inset:-3px;border-radius:99px;border:2px solid transparent;padding:3px;
   background:linear-gradient(90deg,#ff0033,#00f2ea,#ff0033) border-box;-webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);
   -webkit-mask-composite:xor;mask-composite:exclude;animation:flow 3s linear infinite}
+
+/* ---------- creator ---------- */
+.creator{position:relative;z-index:5;padding:1rem 4vw 3rem;display:flex;justify-content:center}
+.creator-card{display:flex;align-items:center;gap:1.6rem;max-width:560px;width:100%;padding:1.6rem 1.8rem;
+  border-radius:24px;border:1px solid var(--line);
+  background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.015));
+  box-shadow:0 0 40px -18px rgba(129,52,175,.6)}
+.creator-photo{width:92px;height:92px;border-radius:50%;object-fit:cover;flex-shrink:0;
+  border:3px solid var(--grad);padding:2px;filter:drop-shadow(0 0 14px rgba(0,242,234,.5))}
+.creator-photo{padding:0;border:3px solid transparent;background:var(--grad) border-box;
+  -webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:flow 4s linear infinite}
+.creator-info h2{font-size:1.8rem}
+.creator-info p{color:var(--muted);font-size:.9rem;margin:.3rem 0 .8rem}
+.creator-links{display:flex;gap:.6rem;flex-wrap:wrap}
+.creator-links a{font-size:.72rem;font-weight:700;letter-spacing:.08em;padding:.4rem .9rem;border-radius:99px;
+  color:#fff;background:color-mix(in srgb,var(--ig) 25%,transparent);border:1px solid color-mix(in srgb,var(--ig) 40%,transparent);transition:background .3s,transform .3s}
+.creator-links a:hover{background:color-mix(in srgb,var(--ig) 60%,transparent);transform:translateY(-2px)}
+@media(max-width:520px){.creator-card{flex-direction:column;text-align:center}}
 
 /* ---------- footer ---------- */
 footer{position:relative;z-index:5;text-align:center;padding:2rem 4vw 3rem;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}
@@ -393,6 +418,21 @@ footer .heart{display:inline-block;background:var(--grad);-webkit-background-cli
     <a class="btn-big" href="#platforms">ENTER THE CONSTELLATION ↓</a>
   </section>
 </main>
+
+<section class="creator">
+  <div class="creator-card reveal">
+    <img src="assets/kasto.jpg" alt="Kasto" class="creator-photo">
+    <div class="creator-info">
+      <h2>Created by Kasto</h2>
+      <p>One feed. Six worlds. Every voice under one universe — built with love, code, and caffeine.</p>
+      <div class="creator-links">
+        <a href="https://www.youtube.com/@Kasto_o" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.instagram.com/kasto_00/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://x.com/Kasto_Klay" target="_blank" rel="noopener">X</a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <footer>
   Made with <span class="heart">♥</span> across spacetime — SocialHub, the living universe of every voice.
