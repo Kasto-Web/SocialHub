@@ -97,61 +97,65 @@ section{position:relative;z-index:5}
   background:conic-gradient(from 0deg,transparent,rgba(129,52,175,.35),rgba(0,242,234,.35),transparent);
   animation:rot 9s linear infinite; filter:blur(30px)}
 @keyframes rot{to{transform:rotate(360deg)}}
-.core{position:absolute;top:50%;left:50%;width:132px;height:132px;transform:translate(-50%,-50%);
+.core{position:absolute;top:50%;left:50%;width:150px;height:150px;transform:translate(-50%,-50%);
   border-radius:50%;display:grid;place-items:center;text-align:center;z-index:4;
   animation:nucleus-pulse 3.2s ease-in-out infinite}
-@keyframes nucleus-pulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.06)}}
-.core::before{content:"";position:absolute;inset:-20px;border-radius:50%;
+@keyframes nucleus-pulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.07)}}
+.core::before{content:"";position:absolute;inset:-26px;border-radius:50%;
   background:conic-gradient(from 0deg,#ff0033,#8134af,#00f2ea,#ff0033);
-  animation:rot 3.5s linear infinite;filter:blur(16px);opacity:.9}
+  animation:rot 3.5s linear infinite;filter:blur(18px);opacity:.95}
+.core::after{content:"";position:absolute;inset:6px;border-radius:50%;
+  background:conic-gradient(from 90deg,rgba(0,242,234,0) 0 30%,rgba(0,242,234,.5) 45%,rgba(255,255,255,.7) 52%,rgba(0,242,234,0) 62%);
+  filter:blur(4px);animation:rot 2.4s linear infinite reverse;mix-blend-mode:screen}
 .core .core-halo{position:absolute;inset:0;border-radius:50%;
-  background:radial-gradient(circle at 50% 50%,#fff 0%,rgba(129,52,175,.55) 55%,transparent 80%);
+  background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.9) 0%,rgba(129,52,175,.6) 50%,transparent 80%);
   animation:halo-breathe 1.8s ease-in-out infinite}
-@keyframes halo-breathe{0%,100%{transform:scale(.94);opacity:.6}50%{transform:scale(1.1);opacity:1}}
+@keyframes halo-breathe{0%,100%{transform:scale(.92);opacity:.55}50%{transform:scale(1.14);opacity:1}}
 .core .core-inner{position:relative;width:100%;height:100%;border-radius:50%;display:grid;place-items:center;
-  background:radial-gradient(circle at 30% 25%,#4a4a78,rgba(129,52,175,.8) 45%,#04040d 85%);
-  box-shadow:0 0 30px rgba(255,0,51,.7),0 0 70px rgba(129,52,175,.9),inset 0 0 26px rgba(0,242,234,.8);
-  overflow:hidden}
-.core .core-swirl{position:absolute;inset:-40%;border-radius:50%;
-  background:conic-gradient(from 0deg,transparent 0 20%,rgba(0,242,234,.35) 30%,transparent 45% 75%,rgba(255,0,51,.3) 85%,transparent);
-  animation:rot 5s linear infinite}
-.bubble{position:absolute;bottom:-10px;border-radius:50%;background:rgba(0,242,234,.5);
-  box-shadow:inset -2px -3px 5px rgba(0,0,0,.3),0 0 8px rgba(0,242,234,.8);animation:bub linear infinite}
-.bubble.b1{left:22%;width:7px;height:7px;animation-duration:3.4s;animation-delay:0s}
-.bubble.b2{left:48%;width:5px;height:5px;animation-duration:2.8s;animation-delay:.7s}
-.bubble.b3{left:70%;width:9px;height:9px;animation-duration:4s;animation-delay:1.3s}
-.bubble.b4{left:36%;width:4px;height:4px;animation-duration:2.4s;animation-delay:.4s}
-.bubble.b5{left:62%;width:6px;height:6px;animation-duration:3.1s;animation-delay:1.8s}
-@keyframes bub{0%{transform:translateY(0) scale(1);opacity:0}10%{opacity:.9}100%{transform:translateY(-150px) scale(1.4);opacity:0}}
-.core .core-inner span{position:relative;font-family:'Bebas Neue';font-size:1.35rem;letter-spacing:.18em;color:#fff;
-  text-shadow:0 2px 16px rgba(0,0,0,.9);animation:label-flicker 2.6s ease-in-out infinite}
-@keyframes label-flicker{0%,100%{opacity:1;transform:scale(1)}30%{opacity:1}38%{opacity:.5;transform:scale(.97)}50%{opacity:1;transform:scale(1.02)}82%{opacity:.9}}
-.core .core-ring{position:absolute;inset:-12px;border-radius:50%;
-  border:2px solid rgba(37,244,238,.4);transform:rotateX(55deg) scaleX(1.28) rotate(-18deg);
-  animation:ring-roll 3.2s ease-in-out infinite;box-shadow:0 0 18px rgba(37,244,238,.45)}
-@keyframes ring-roll{0%,100%{transform:rotateX(55deg) scaleX(1.28) rotate(-18deg) translateZ(0);opacity:.8}50%{transform:rotateX(55deg) scaleX(1.28) rotate(-18deg) translateZ(7px);opacity:1}}
-.core{perspective:500px}
-.core .core-ring::after{content:"";position:absolute;inset:-2px;border-radius:50%;
-  background:conic-gradient(from 0deg,transparent 0 78%,#fff 87%,#00f2ea 92%,transparent 97%);
-  -webkit-mask:radial-gradient(farthest-side,#000 0 96%,transparent 98%);
-  mask:radial-gradient(farthest-side,#000 0 96%,transparent 98%);
-  animation:rot 3.2s linear infinite}
+  background:radial-gradient(circle at 32% 26%,#6a74b8 0%,rgba(129,52,175,.9) 40%,#1a0b2e 75%,#04040d 92%);
+  box-shadow:0 0 34px rgba(255,0,51,.8),0 0 80px rgba(129,52,175,1),inset 0 0 30px rgba(0,242,234,.9);
+  overflow:hidden;border:1px solid rgba(0,242,234,.25)}
+.core .core-swirl{position:absolute;inset:-50%;border-radius:50%;
+  background:conic-gradient(from 0deg,transparent 0 18%,rgba(0,242,234,.5) 30%,transparent 42% 72%,rgba(255,0,51,.4) 84%,transparent);
+  animation:rot 4.5s linear infinite;opacity:.9}
+.bubble{position:absolute;bottom:-10px;border-radius:50%;background:rgba(0,242,234,.55);
+  box-shadow:inset -2px -3px 5px rgba(0,0,0,.3),0 0 10px rgba(0,242,234,.9);animation:bub linear infinite}
+.bubble.b1{left:22%;width:8px;height:8px;animation-duration:3.4s;animation-delay:0s}
+.bubble.b2{left:48%;width:6px;height:6px;animation-duration:2.8s;animation-delay:.7s}
+.bubble.b3{left:70%;width:10px;height:10px;animation-duration:4s;animation-delay:1.3s}
+.bubble.b4{left:36%;width:5px;height:5px;animation-duration:2.4s;animation-delay:.4s}
+.bubble.b5{left:62%;width:7px;height:7px;animation-duration:3.1s;animation-delay:1.8s}
+@keyframes bub{0%{transform:translateY(0) scale(1);opacity:0}10%{opacity:.9}100%{transform:translateY(-170px) scale(1.5);opacity:0}}
+.core .core-inner span{position:relative;font-family:'Bebas Neue';font-size:1.55rem;letter-spacing:.2em;color:#fff;
+  text-shadow:0 2px 18px rgba(0,0,0,.9),0 0 24px rgba(0,242,234,.6);animation:label-flicker 2.6s ease-in-out infinite;z-index:2}
+@keyframes label-flicker{0%,100%{opacity:1;transform:scale(1)}30%{opacity:1}38%{opacity:.55;transform:scale(.96)}50%{opacity:1;transform:scale(1.04)}82%{opacity:.9}}
 
-/* comet with trailing arc */
-.core .core-comet{position:absolute;inset:-40px;border-radius:50%;animation:comet-orbit 4.5s linear infinite}
-.core .core-comet i{position:absolute;top:-4px;left:50%;width:9px;height:9px;transform:translateX(-50%);border-radius:50%;
-  background:#fff;box-shadow:0 0 12px #fff,0 0 22px #00f2ea,0 0 40px rgba(0,242,234,.8);z-index:2}
-.core .core-comet::before{content:"";position:absolute;top:50%;left:50%;width:120px;height:120px;transform:translate(-50%,-50%);
-  border-radius:50%;background:conic-gradient(from 90deg,rgba(0,242,234,0) 0 62%,rgba(0,242,234,.8) 82%,rgba(255,255,255,.95) 90%,rgba(0,242,234,0) 100%);
-  -webkit-mask:radial-gradient(farthest-side,transparent 0 47%,#000 50% 52%,transparent 60%);
-  mask:radial-gradient(farthest-side,transparent 0 47%,#000 50% 52%,transparent 60%);
-  animation:comet-trail 4.5s linear infinite reverse}
+/* wide visible comet orbit with traveling light */
+.core .core-comet{position:absolute;inset:-34px;border-radius:50%;animation:comet-orbit 4s linear infinite;z-index:2}
+.core .core-comet i{position:absolute;top:-5px;left:50%;transform:translateX(-50%);width:11px;height:11px;border-radius:50%;
+  background:#fff;box-shadow:0 0 14px #fff,0 0 26px #00f2ea,0 0 50px rgba(0,242,234,.9)}
+.core .core-comet::before{content:"";position:absolute;top:50%;left:50%;width:150px;height:150px;transform:translate(-50%,-50%);
+  border-radius:50%;background:conic-gradient(from 180deg,rgba(0,242,234,0) 0 40%,rgba(0,242,234,.9) 60%,rgba(255,255,255,1) 72%,rgba(0,242,234,0) 80%);
+  -webkit-mask:radial-gradient(farthest-side,transparent 0 46%,#000 50% 54%,transparent 64%);
+  mask:radial-gradient(farthest-side,transparent 0 46%,#000 50% 54%,transparent 64%);
+  animation:comet-trail 4s linear infinite reverse;filter:blur(.5px)}
 @keyframes comet-orbit{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @keyframes comet-trail{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(-360deg)}}
-.core .core-dot{position:absolute;width:5px;height:5px;border-radius:50%;background:#25f4ee;box-shadow:0 0 10px #25f4ee;top:50%;left:50%;animation:dot-orb 4s linear infinite}
+
+/* bright flat orbit ring + orbiting dots */
+.core .core-ring{position:absolute;inset:-16px;border-radius:50%;
+  border:2px solid rgba(37,244,238,.5);box-shadow:0 0 20px rgba(37,244,238,.55),inset 0 0 14px rgba(37,244,238,.3);
+  animation:ring-roll 3s ease-in-out infinite}
+@keyframes ring-roll{0%,100%{transform:scale(1) rotate(0deg);opacity:.85}50%{transform:scale(1.03) rotate(4deg);opacity:1}}
+.core .core-ring::after{content:"";position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(from 0deg,transparent 0 80%,#fff 90%,#00f2ea 96%,transparent 100%);
+  -webkit-mask:radial-gradient(farthest-side,#000 0 96%,transparent 98%);
+  mask:radial-gradient(farthest-side,#000 0 96%,transparent 98%);
+  animation:rot 3s linear infinite}
+.core .core-dot{position:absolute;width:6px;height:6px;border-radius:50%;background:#25f4ee;box-shadow:0 0 12px #25f4ee;top:50%;left:50%;animation:dot-orb 4s linear infinite}
 .core .core-dot.d1{animation-duration:4s}
-.core .core-dot.d2{animation-duration:6s;width:4px;height:4px;background:#ff0033;box-shadow:0 0 10px #ff0033}
-.core .core-dot.d3{animation-duration:5s;width:6px;height:6px;background:#8134af;box-shadow:0 0 10px #8134af}
+.core .core-dot.d2{animation-duration:6s;width:5px;height:5px;background:#ff0033;box-shadow:0 0 12px #ff0033}
+.core .core-dot.d3{animation-duration:5s;width:7px;height:7px;background:#8134af;box-shadow:0 0 12px #8134af}
 @keyframes dot-orb{from{transform:rotate(0deg) translateX(78px) rotate(0deg)}to{transform:rotate(360deg) translateX(78px) rotate(-360deg)}}
 .ringline{position:absolute;top:50%;left:50%;border-radius:50%;transform:translate(-50%,-50%);
   border:1px dashed rgba(255,255,255,.14)}
