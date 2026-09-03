@@ -66,7 +66,6 @@ nav{position:relative;z-index:10;display:flex;align-items:center;justify-content
 .brand .brand-photo{width:30px;height:30px;border-radius:50%;object-fit:cover;
   border:2px solid var(--grad);padding:0;outline:2px solid rgba(0,242,234,.4);
   box-shadow:0 0 14px rgba(129,52,175,.8);animation:pulse 2.2s ease-in-out infinite}
-@keyframes brand-glow{0%,100%{box-shadow:0 0 14px rgba(129,52,175,.8)}50%{box-shadow:0 0 22px rgba(0,242,234,.9)}}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25) rotate(180deg)}}
 .nav-right{display:flex;align-items:center;gap:1.2rem;font-size:.8rem;color:var(--muted);letter-spacing:.06em}
 .live-pill{display:flex;align-items:center;gap:.5rem;padding:.35rem .8rem;border:1px solid rgba(0,242,234,.4);border-radius:99px;color:var(--ink);background:rgba(0,242,234,.06)}
@@ -306,12 +305,6 @@ footer .heart{display:inline-block;background:var(--grad);-webkit-background-cli
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
 }
-
-/* ---------- perf: compositor hints ---------- */
-.aurora,.grain,#stars,.orbit-stage,.node,.node .spin,.chip,.core,.core *,.toast{will-change:transform,opacity}
-.card,.logo,.btn-big{will-change:transform}
-.orbit-stage,.cards{contain:content}
-img{content-visibility:auto}
 </style>
 </head>
 <body>
@@ -467,7 +460,7 @@ img{content-visibility:auto}
 
 <section class="creator">
   <div class="creator-card">
-    <img src="assets/kasto.jpg" alt="Kasto" class="creator-photo" loading="lazy" decoding="async">
+    <img src="assets/kasto.jpg" alt="Kasto" class="creator-photo">
     <div class="creator-info">
       <h2>Created by Kasto</h2>
       <p>One feed. Six worlds. Every voice under one universe — built with love, code, and caffeine.</p>
@@ -484,28 +477,20 @@ img{content-visibility:auto}
   Made with <span class="heart">♥</span> across spacetime — SocialHub, the living universe of every voice.
 </footer>
 
+<div id="toasts"></div>
 <canvas id="confetti"></canvas>
 
 <script>
 // ---------- starfield ----------
 (function(){
-  const c=document.getElementById('stars'),x=c.getContext('2d');
-  const DPR=Math.min(window.devicePixelRatio||1,2);let W,H,stars=[],shoot=null;
-  function size(){
-    W=innerWidth;H=innerHeight;
-    c.width=W*DPR;c.height=H*DPR;
-    c.style.width=W+'px';c.style.height=H+'px';
-    x.setTransform(DPR,0,0,DPR,0,0);
-  }
+  const c=document.getElementById('stars'),x=c.getContext('2d');let W,H,stars=[],shoot=null;
+  function size(){W=c.width=innerWidth;H=c.height=innerHeight;}
   function makeStars(){
     stars=[];
-    const m=(W*H)/2600;const n=Math.floor(Math.min(m,innerWidth<640?180:400));
+    const n=Math.floor((W*H)/2600);
     for(let i=0;i<n;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.6+.2,t:Math.random()*Math.PI*2,s:Math.random()*.02+.005,c:Math.random()<.12?'#25f4ee':Math.random()<.12?'#ff0033':'#fff'});
   }
-  let raf;let last=0;
-  function frame(ts){
-    raf=requestAnimationFrame(frame);
-    if(ts-last<30)return;last=ts;
+  function frame(t){
     x.clearRect(0,0,W,H);
     for(const s of stars){
       s.t+=s.s;
@@ -525,14 +510,9 @@ img{content-visibility:auto}
       const ang=Math.PI*(Math.random()*4+1.4);
       shoot={x:Math.random()*W*1.2,y:Math.random()*H*.5,vx:Math.cos(ang)*6,vy:Math.sin(ang)*6,life:900};
     }
+    requestAnimationFrame(frame);
   }
-  const onResize=()=>{size();makeStars();};
-  addEventListener('resize',onResize);
-  if(document.hidden!==undefined){
-    document.addEventListener('visibilitychange',()=>{
-      if(document.hidden)cancelAnimationFrame(raf);else if(raf!==null){raf=requestAnimationFrame(frame);}
-    });
-  }
+  addEventListener('resize',()=>{size();makeStars();});
   size();makeStars();requestAnimationFrame(frame);
 })();
 
@@ -585,9 +565,8 @@ img{content-visibility:auto}
 
 // ---------- confetti ----------
 const cvs=document.getElementById('confetti'),cx=cvs.getContext('2d');
-const DPRc=Math.min(window.devicePixelRatio||1,2);
 let ps=[];
-function sizeC(){cvs.width=innerWidth*DPRc;cvs.height=innerHeight*DPRc;cvs.style.width=innerWidth+'px';cvs.style.height=innerHeight+'px';cx.setTransform(DPRc,0,0,DPRc,0,0);}
+function sizeC(){cvs.width=innerWidth;cvs.height=innerHeight;}
 sizeC();addEventListener('resize',sizeC);
 function burst(x,y,n){
   const cols=['#ff0033','#00f2ea','#f5f5f5','#8134af','#ff4500','#1877f2','#e1306c'];
@@ -595,11 +574,9 @@ function burst(x,y,n){
     const a=Math.random()*Math.PI*2,v=Math.random()*9+3;
     ps.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-5,g:.22,rot:Math.random()*360,vr:(Math.random()-.5)*16,t:0,life:70+Math.random()*40,c:cols[(Math.random()*cols.length)|0],s:5+Math.random()*6,shape:Math.random()<.6?'r':'c'});
   }
-  if(ps.length>300)ps=ps.slice(-300);
+  if(ps.length>400)ps=ps.slice(-400);
 }
 (function tickC(){
-  requestAnimationFrame(tickC);
-  if(document.hidden||!ps.length){if(!ps.length)return;return;}
   cx.clearRect(0,0,cvs.width,cvs.height);
   ps=ps.filter(p=>p.t<p.life);
   for(const p of ps){
@@ -611,7 +588,7 @@ function burst(x,y,n){
     else{cx.beginPath();cx.arc(0,0,p.s/3,0,7);cx.fill();}
     cx.restore();
   }
-  cx.globalAlpha=1;
+  requestAnimationFrame(tickC);
 })();
 burst(innerWidth/2,innerHeight/3,120);
 
