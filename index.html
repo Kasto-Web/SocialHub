@@ -123,17 +123,27 @@ section{position:relative;z-index:5}
   clip-path:polygon(0 0,100% 0,100% 50%,0 50%);
   animation:rot 6s linear infinite;opacity:.9}
 
-/* two large clean orbital rings with glowing moons */
+/* --- orbital rings with planets (proven internet technique:
+       planet parked at top of ring, ring spins => perfect circle) --- */
 .orbit{position:absolute;top:50%;left:50%;border-radius:50%;
-  border:1.5px solid rgba(255,255,255,.16);animation:orbit-spin linear infinite}
-.orbit-a{width:300px;height:300px;margin:-150px 0 0 -150px;animation-duration:18s}
-.orbit-b{width:230px;height:230px;margin:-115px 0 0 -115px;border-style:dashed;border-color:rgba(0,242,234,.35);animation-duration:14s;animation-direction:reverse}
-@keyframes orbit-spin{to{transform:rotate(360deg)}}
-.moon{position:absolute;top:-6px;left:50%;margin-left:-6px;width:12px;height:12px;border-radius:50%;
-  background:#fff;box-shadow:0 0 14px #fff,0 0 28px rgba(0,242,234,.9)}
-.moon::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:2px solid rgba(0,242,234,.5);opacity:.7}
-.m1{background:#00f2ea;box-shadow:0 0 16px #00f2ea,0 0 36px rgba(0,242,234,.9)}
-.m2{background:#ff5b6a;box-shadow:0 0 16px #ff5b6a,0 0 36px rgba(255,0,51,.8)}
+  border:1.5px solid rgba(255,255,255,.12);display:flex;align-items:flex-start;justify-content:center}
+.moon{position:relative;margin-top:-1px;border-radius:50%;
+  box-shadow:inset -3px -2px 6px rgba(0,0,0,.5),0 0 16px currentColor;flex:0 0 auto}
+.moon::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:2px solid currentColor;opacity:.5}
+.m1{background:#00f2ea;color:#00f2ea;width:12px;height:12px;box-shadow:inset 0 0 4px rgba(0,0,0,.5),0 0 16px #00f2ea,0 0 36px rgba(0,242,234,.8)}
+.m2{background:#ff5b6a;color:#ff5b6a;width:9px;height:9px;box-shadow:inset 0 0 4px rgba(0,0,0,.5),0 0 16px #ff5b6a,0 0 32px rgba(255,0,51,.8)}
+.orbit-a{width:300px;height:300px;margin:-150px 0 0 -150px;animation:rot 18s linear infinite}
+.orbit-b{width:232px;height:232px;margin:-116px 0 0 -116px;border-style:dashed;border-color:rgba(0,242,234,.35);animation:rot 14s linear infinite reverse}
+.orbit-c{width:168px;height:168px;margin:-84px 0 0 -84px;border-color:rgba(129,52,175,.4);animation:rot 10s linear infinite}
+
+/* --- plasma comet trail whipping around the core (internet comet-loader technique) --- */
+.plasma{position:absolute;top:50%;left:50%;width:300px;height:300px;margin:-150px 0 0 -150px;border-radius:50%;animation:rot 6s linear infinite}
+.plasma .pdot{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:13px;height:13px;border-radius:50%;
+  background:#fff;box-shadow:0 0 14px #fff,0 0 28px #b48cff,0 0 50px rgba(180,140,255,.9);z-index:2}
+.plasma .trail{position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(transparent 0 62%,rgba(180,140,255,.85) 86%,rgba(255,255,255,.95) 94%,transparent 100%);
+  -webkit-mask:radial-gradient(farthest-side,#0000 calc(100% - 16px),#000 0);
+  mask:radial-gradient(farthest-side,#0000 calc(100% - 16px),#000 0)}
 .ringline{position:absolute;top:50%;left:50%;border-radius:50%;transform:translate(-50%,-50%);
   border:1px dashed rgba(255,255,255,.14)}
 .ringline.r1{width:calc(100% - 30px);height:calc(100% - 30px)}
@@ -340,7 +350,10 @@ footer .heart{display:inline-block;background:var(--grad);-webkit-background-cli
         <div class="core-halo"></div>
         <div class="orbit orbit-a"><i class="moon m1"></i></div>
         <div class="orbit orbit-b"><i class="moon m2"></i></div>
+        <div class="orbit orbit-c"><i class="moon m1" style="width:7px;height:7px"></i></div>
       </div>
+
+      <div class="plasma"><span class="pdot"></span><span class="trail"></span></div>
 
       <div class="node" style="--a:0deg;--r:238px;--dur:24s"><div class="spin"><a href="https://www.youtube.com/@Kasto_o" target="_blank" rel="noopener"><div class="chip yt" title="YouTube — @Kasto_o"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.4-.4-5a3 3 0 0 0-2.1-2.1C18.9 4.5 12 4.5 12 4.5s-6.9 0-8.5.4A3 3 0 0 0 1.4 7C1 8.6 1 12 1 12s0 3.4.4 5a3 3 0 0 0 2.1 2.1c1.6.4 8.5.4 8.5.4s6.9 0 8.5-.4a3 3 0 0 0 2.1-2.1c.4-1.6.4-5 .4-5z" fill="#ff0033"/><path d="M10 8.6 15.5 12 10 15.4z" fill="#fff"/></svg></div></a></div></div>
       <div class="node" style="--a:180deg;--r:238px;--dur:24s"><div class="spin"><a href="https://x.com/Kasto_Klay" target="_blank" rel="noopener"><div class="chip x" title="X — @Kasto_Klay"><svg viewBox="0 0 24 24"><path d="M18.244 2.25H21.5l-7.5 8.6L22.5 21.75h-6.9l-5.4-7-6.2 7H1.7l8-9.2L1.5 2.25h7.1l4.9 6.4 5.7-6.4zM17.1 19.8h1.9L6.95 4.1H4.9z" fill="#fff"/></svg></div></a></div></div>
