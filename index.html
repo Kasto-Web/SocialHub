@@ -97,44 +97,43 @@ section{position:relative;z-index:5}
   background:conic-gradient(from 0deg,transparent,rgba(129,52,175,.35),rgba(0,242,234,.35),transparent);
   animation:rot 9s linear infinite; filter:blur(30px)}
 @keyframes rot{to{transform:rotate(360deg)}}
-/* ---- STAR (sun) CORE, solar-system rebuild from internet technique ---- */
-.core{position:absolute;top:50%;left:50%;width:120px;height:120px;transform:translate(-50%,-50%);
-  border-radius:50%;display:grid;place-items:center;text-align:center;z-index:5;
-  animation:nucleus-pulse 3.2s ease-in-out infinite}
-@keyframes nucleus-pulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.06)}}
-.core::before{content:"";position:absolute;inset:-34px;border-radius:50%;
-  background:radial-gradient(circle at 50% 50%,rgba(0,242,234,.5) 0%,rgba(129,52,175,.5) 42%,rgba(255,0,51,.18) 62%,transparent 74%);
-  filter:blur(5px);animation:bloom 3.2s ease-in-out infinite}
-@keyframes bloom{0%,100%{opacity:.65;transform:scale(.96)}50%{opacity:1;transform:scale(1.07)}}
-.core .core-body{position:absolute;inset:0;border-radius:50%;overflow:hidden;
-  background:radial-gradient(circle at 36% 30%,#5fe3f2 0%,#2b8ce0 34%,#6a2fd0 68%,#1a0b3e 100%);
-  box-shadow:0 0 26px rgba(0,242,234,.9),0 0 70px rgba(129,52,175,.9),inset 0 0 30px rgba(255,255,255,.4);
-  border:1px solid rgba(0,242,234,.3)}
-.core .core-swirl{position:absolute;inset:-46%;border-radius:50%;
-  background:conic-gradient(from 0deg,transparent 0 10%,rgba(0,242,234,.55) 22%,transparent 36% 66%,rgba(255,255,255,.6) 80%,transparent);
-  animation:rot 4.5s linear infinite;mix-blend-mode:screen}
-.core .core-body span{position:relative;z-index:2;font-family:'Bebas Neue';font-size:1.35rem;letter-spacing:.2em;color:#fff;
-  text-shadow:0 2px 16px rgba(0,0,0,.9),0 0 20px rgba(0,242,234,.8)}
+/* ---- STAR CORE (rebuilt from zero) ---- */
+.core{position:absolute;top:50%;left:50%;width:170px;height:170px;transform:translate(-50%,-50%);
+  border-radius:50%;display:grid;place-items:center;text-align:center;z-index:4;
+  animation:nucleus-pulse 3.4s ease-in-out infinite}
+@keyframes nucleus-pulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.05)}}
 
-/* proven flex-orbit technique: each orbit is a circular flex container
-   that spins; its planet sits at 12 o'clock and traces a perfect circle */
-.solar{position:absolute;top:50%;left:50%;border-radius:50%;
-  border:1px solid rgba(255,255,255,.10);
-  display:flex;align-items:flex-start;justify-content:center;
-  animation:rot linear infinite}
-.solar::before{content:"";position:absolute;top:50%;left:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:rgba(255,255,255,.35)}
-.solar .sat{margin-top:-1px;border-radius:50%;box-shadow:inset 0 0 6px rgba(0,0,0,.5),0 0 12px currentColor;flex:0 0 auto}
-.solar .sat::after{content:attr(data-n);position:absolute;top:calc(100% + 5px);left:50%;transform:translateX(-50%);
-  font-size:9px;letter-spacing:.1em;color:rgba(255,255,255,.5);white-space:nowrap;font-family:'Space Grotesk',sans-serif}
-/* orbit paths (smaller than platform-chip orbits) */
-.solar-a{width:200px;height:200px;margin:-100px 0 0 -100px;animation-duration:16s}
-.solar-b{width:270px;height:270px;margin:-135px 0 0 -135px;border-style:dashed;border-color:rgba(0,242,234,.3);animation-duration:24s;animation-direction:reverse}
-.solar-c{width:150px;height:150px;margin:-75px 0 0 -75px;border-color:rgba(255,255,255,.14);animation-duration:11s}
-/* planets */
-.sat-s1{width:12px;height:12px;background:#00f2ea;color:#00f2ea}
-.sat-s2{width:9px;height:9px;background:#ff5b6a;color:#ff5b6a}
-.sat-s3{width:7px;height:7px;background:#b48cff;color:#b48cff}
-.sat-s4{width:8px;height:8px;background:#ffe978;color:#ffe978}
+/* soft multi-color bloom behind the star */
+.core .core-glow{position:absolute;inset:-46px;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%,rgba(129,52,175,.55) 0%,rgba(0,242,234,.22) 42%,rgba(255,0,51,.12) 60%,transparent 72%);
+  filter:blur(6px);animation:bloom 3.4s ease-in-out infinite}
+@keyframes bloom{0%,100%{opacity:.7;transform:scale(.95)}50%{opacity:1;transform:scale(1.06)}}
+
+/* the star sphere */
+.core .core-body{position:absolute;inset:0;border-radius:50%;overflow:hidden;
+  background:radial-gradient(circle at 34% 30%,#9fb0ff 0%,#7a52d9 35%,#3a1d6e 72%,#140624 100%);
+  box-shadow:0 0 30px rgba(129,52,175,.9),0 0 70px rgba(0,242,234,.55),inset 0 0 34px rgba(255,255,255,.35)}
+.core .core-swirl{position:absolute;inset:-44%;border-radius:50%;
+  background:conic-gradient(from 0deg,transparent 0 12%,rgba(0,242,234,.45) 24%,transparent 38% 70%,rgba(255,255,255,.5) 82%,transparent);
+  animation:rot 5s linear infinite;mix-blend-mode:screen}
+.core .core-body span{position:relative;z-index:2;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:.2em;color:#fff;
+  text-shadow:0 2px 18px rgba(0,0,0,.9),0 0 22px rgba(0,242,234,.7)}
+.core .core-halo{position:absolute;inset:-12px;border-radius:50%;
+  border:2px solid rgba(0,242,234,.4);
+  clip-path:polygon(0 0,100% 0,100% 50%,0 50%);
+  animation:rot 6s linear infinite;opacity:.9}
+
+/* two large clean orbital rings with glowing moons */
+.orbit{position:absolute;top:50%;left:50%;border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.16);animation:orbit-spin linear infinite}
+.orbit-a{width:300px;height:300px;margin:-150px 0 0 -150px;animation-duration:18s}
+.orbit-b{width:230px;height:230px;margin:-115px 0 0 -115px;border-style:dashed;border-color:rgba(0,242,234,.35);animation-duration:14s;animation-direction:reverse}
+@keyframes orbit-spin{to{transform:rotate(360deg)}}
+.moon{position:absolute;top:-6px;left:50%;margin-left:-6px;width:12px;height:12px;border-radius:50%;
+  background:#fff;box-shadow:0 0 14px #fff,0 0 28px rgba(0,242,234,.9)}
+.moon::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:2px solid rgba(0,242,234,.5);opacity:.7}
+.m1{background:#00f2ea;box-shadow:0 0 16px #00f2ea,0 0 36px rgba(0,242,234,.9)}
+.m2{background:#ff5b6a;box-shadow:0 0 16px #ff5b6a,0 0 36px rgba(255,0,51,.8)}
 .ringline{position:absolute;top:50%;left:50%;border-radius:50%;transform:translate(-50%,-50%);
   border:1px dashed rgba(255,255,255,.14)}
 .ringline.r1{width:calc(100% - 30px);height:calc(100% - 30px)}
@@ -333,14 +332,15 @@ footer .heart{display:inline-block;background:var(--grad);-webkit-background-cli
       <div class="ringline r3"><span class="sat" style="animation:rot 2.2s linear infinite"></span></div>
 
       <div class="core">
+        <div class="core-glow"></div>
         <div class="core-body">
           <div class="core-swirl"></div>
           <span id="core-label">KASTO</span>
         </div>
+        <div class="core-halo"></div>
+        <div class="orbit orbit-a"><i class="moon m1"></i></div>
+        <div class="orbit orbit-b"><i class="moon m2"></i></div>
       </div>
-      <div class="solar solar-c"><span class="sat sat-s3" data-n="CORE"></span></div>
-      <div class="solar solar-a"><span class="sat sat-s1" data-n="FEED"></span></div>
-      <div class="solar solar-b"><span class="sat sat-s4" data-n="WORLD"></span></div>
 
       <div class="node" style="--a:0deg;--r:238px;--dur:24s"><div class="spin"><a href="https://www.youtube.com/@Kasto_o" target="_blank" rel="noopener"><div class="chip yt" title="YouTube — @Kasto_o"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.4-.4-5a3 3 0 0 0-2.1-2.1C18.9 4.5 12 4.5 12 4.5s-6.9 0-8.5.4A3 3 0 0 0 1.4 7C1 8.6 1 12 1 12s0 3.4.4 5a3 3 0 0 0 2.1 2.1c1.6.4 8.5.4 8.5.4s6.9 0 8.5-.4a3 3 0 0 0 2.1-2.1c.4-1.6.4-5 .4-5z" fill="#ff0033"/><path d="M10 8.6 15.5 12 10 15.4z" fill="#fff"/></svg></div></a></div></div>
       <div class="node" style="--a:180deg;--r:238px;--dur:24s"><div class="spin"><a href="https://x.com/Kasto_Klay" target="_blank" rel="noopener"><div class="chip x" title="X — @Kasto_Klay"><svg viewBox="0 0 24 24"><path d="M18.244 2.25H21.5l-7.5 8.6L22.5 21.75h-6.9l-5.4-7-6.2 7H1.7l8-9.2L1.5 2.25h7.1l4.9 6.4 5.7-6.4zM17.1 19.8h1.9L6.95 4.1H4.9z" fill="#fff"/></svg></div></a></div></div>
